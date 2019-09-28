@@ -14,31 +14,52 @@ describe('initialState', () => {
     it('each player starts with 0 points', () => {
       expect(initialState.gamePoints.player1).to.equal(0);
       expect(initialState.gamePoints.player2).to.equal(0);
-    })
-  })
+    });
+  });
 });
 
 describe('getGameScore', () => {
   it('love-all', () => {
-    const gamePoints = { player1: 0, player2: 0 };
+    const state = {
+      gamePoints: { player1: 0, player2: 0 },
+      gameState: {
+        state: 'PLAYING',
+        advantage: null,
+        winningPlayer: null,
+      },
+    };
 
-    const gameScore = getGameScore(gamePoints);
+    const gameScore = getGameScore(state);
 
     expect(gameScore.scoreCall).to.equal('love-all');
   });
 
   it('15-love', () => {
-    const gamePoints = { player1: 1, player2: 0 };
+    const state = {
+      gamePoints: { player1: 1, player2: 0 },
+      gameState: {
+        state: 'PLAYING',
+        advantage: null,
+        winningPlayer: null,
+      },
+    };
 
-    const gameScore = getGameScore(gamePoints);
+    const gameScore = getGameScore(state);
 
     expect(gameScore.scoreCall).to.equal('15-love', 'Implement player scored logic');
   });
 
   it('Game, player1 (after 40-0)', () => {
-    const gamePoints = { player1: 4, player2: 0 };
+    const state = {
+      gamePoints: { player1: 4, player2: 0 },
+      gameState: {
+        state: 'WON',
+        advantage: null,
+        winningPlayer: 'player1',
+      },
+    };
 
-    const { scoreCall, winningPlayer } = getGameScore(gamePoints);
+    const { scoreCall, winningPlayer } = getGameScore(state);
 
     expect(scoreCall).to.equal('Game, player1', 'Implement player win logic after 40-0');
     expect(winningPlayer).to.equal('player1', 'Implement player win logic after 40-0');
@@ -125,6 +146,9 @@ describe('<Scoreboard />', () => {
 
     wrapper.find('button.player1-scores').simulate('click');
 
-    expect(wrapper.find('h2#score').text()).to.equal('Score: 15-love', 'Implement game scoring UI interaction');
+    expect(wrapper.find('h2#score').text()).to.equal(
+      'Score: 15-love',
+      'Implement game scoring UI interaction',
+    );
   });
 });
