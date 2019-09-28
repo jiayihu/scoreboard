@@ -30,7 +30,7 @@ function getPlayingGameState(playerNumber, prevState) {
   const { gamePoints } = prevState;
   const player = `player${playerNumber}`;
   const currScore = getScore(gamePoints[player]);
-  const nextPoints = getScore(gamePoints[player] + 1);
+  const nextScore = getScore(gamePoints[player] + 1);
   const opponent = getOpponent(playerNumber);
   const opponentScore = getScore(gamePoints[opponent]);
 
@@ -42,7 +42,7 @@ function getPlayingGameState(playerNumber, prevState) {
     };
   }
 
-  if (nextPoints === 40 && opponentScore === 40) {
+  if (nextScore === 40 && opponentScore === 40) {
     return {
       state: GAME_STATES.DEUCE,
       advantage: null,
